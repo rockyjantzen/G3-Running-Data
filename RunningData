@@ -1,0 +1,25 @@
+pip install folium
+
+import pandas as pd
+import folium
+
+file_path = r'C:\Users\SL Admin\Downloads\HMdata.csv'
+data = pd.read_csv(file_path, delimiter=';')
+
+latitude = data['Latitude'].tolist()
+longitude = data['Longitude'].tolist()
+
+# Create a list of latitude and longitude pairs
+coordinates = list(zip(latitude, longitude))
+
+from folium.plugins import AntPath
+mapObj = folium.Map(location=[61.499861888587475, 23.759549595415592], zoom_start=12)
+
+# create antpath and add to map
+AntPath(coordinates, delay=800, dash_array=[30, 15], color="red", weight=3).add_to(mapObj)
+
+# save the map object as an HTML file
+mapObj.save('output.html')
+
+# Display the map
+mapObj
